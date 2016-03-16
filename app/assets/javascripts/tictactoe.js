@@ -31,7 +31,7 @@ function attachListeners() {
     gameList();
   });
 
-  loadGame(); 
+  loadGame();
 }
 
 function doTurn(cell) {
@@ -113,7 +113,13 @@ function save() {
       }
     }
   });
-  
+
+  if (!currentGame) {
+    $.getJSON("/games").done(function(data) {
+      currentGame = data["games"].length;
+    });
+  }
+
   gameBoard = [];
   gameList();
 }
