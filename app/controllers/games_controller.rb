@@ -11,7 +11,8 @@ class GamesController < ApplicationController
 
   def create
     #binding.pry
-    Game.create(game_params)
+    game = Game.create(game_params)
+    render json: game
     #respond_to do |format|
     #  format.json { Game.create(JSON.parse(params)["game"]) }
     #end

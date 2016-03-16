@@ -112,16 +112,10 @@ function save() {
         state: gameBoard
       }
     }
-  });
-
-  if (!currentGame) {
-    $.getJSON("/games").done(function(data) {
-      currentGame = data["games"].length;
+  })
+    .done(function (response) {
+      currentGame = response["id"];
     });
-  }
-
-  gameBoard = [];
-  gameList();
 }
 
 
