@@ -1,3 +1,6 @@
+
+var currentGame;
+
 var turn = 0;
 
 var winningCombos = [
@@ -16,6 +19,10 @@ function attachListeners() {
   $('[data-x]').click(function() {
     doTurn(this);
   });
+
+  $('#save').click(function () {
+    save();
+  })
 }
 
 function doTurn(cell) {
@@ -68,6 +75,23 @@ function message(string) {
 function resetGame() {
   $('td').text("");
   turn = 0;
+}
+
+function save () {
+  var url;
+  var method;
+  if (currentGame){
+    url = "/games/" + currentGame
+    method = "PATCH"
+  } else {
+    url = "/games"
+    method = "POST"
+  }
+
+}
+
+var getAllGames = function() {
+
 }
 
 $(document).ready(function() {
