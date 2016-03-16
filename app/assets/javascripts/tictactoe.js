@@ -41,6 +41,7 @@ function doTurn(cell) {
       resetGame();
     } else {
       turn += 1;
+      save();
     }
   }
 }
@@ -84,6 +85,7 @@ function message(string) {
 function resetGame() {
   $('td').text("");
   turn = 0;
+  currentGame = 0;
 }
 
 
@@ -103,7 +105,7 @@ function save() {
     url = "/games"
     method = "POST"
   }
-
+  //debugger;
   $.ajax({
     url: url,
     method: method,
