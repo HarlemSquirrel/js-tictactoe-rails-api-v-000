@@ -105,7 +105,7 @@ function save() {
     url = "/games"
     method = "POST"
   }
-  //debugger;
+
   $.ajax({
     url: url,
     method: method,
@@ -116,7 +116,9 @@ function save() {
     }
   })
     .done(function (response) {
-      currentGame = response["id"];
+      //debugger;
+      //currentGame = response["id"];
+      currentGame = response["game"] ? response["game"]["id"] : response["id"];
     });
 }
 
