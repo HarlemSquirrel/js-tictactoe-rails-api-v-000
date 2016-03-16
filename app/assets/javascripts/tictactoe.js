@@ -22,7 +22,11 @@ function attachListeners() {
 
   $('#save').click(function () {
     save();
-  })
+  });
+  
+  $("#previous").click(function() {
+    getAllGames();
+  })  
 }
 
 function doTurn(cell) {
