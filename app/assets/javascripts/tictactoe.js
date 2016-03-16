@@ -20,13 +20,18 @@ function attachListeners() {
     doTurn(this);
   });
 
-  $('#save').click(function () {
+  $('#save').on('click', function(event){
+    event.preventDefault();
     save();
   });
-  
-  $("#previous").click(function() {
-    getAllGames();
-  })  
+
+
+  $("#previous").on('click', function(event) {
+    event.preventDefault();
+    gameList();
+  });
+
+  loadGame(); 
 }
 
 function doTurn(cell) {
@@ -81,10 +86,17 @@ function resetGame() {
   turn = 0;
 }
 
-function save () {
-  var url;
-  var method;
-  if (currentGame){
+
+function save() {
+  var gameBoard = [],
+      url = '';
+      method = '';
+
+  $('td').each(function() {
+    gameBoard.push($(this).text());
+  });
+
+  if(currentGame) {
     url = "/games/" + currentGame
     method = "PATCH"
   } else {
@@ -92,10 +104,49 @@ function save () {
     method = "POST"
   }
 
+  $.ajax({
+    url: url,
+    method: method,
+    data: {
+      game: {
+        state: gameBoard
+      }
+    }
+  });
+  
+  gameBoard = [];
+  gameList();
 }
 
-var getAllGames = function() {
 
+function loadGame(){
+  $('div#games').on('click', 'button', function(){
+    method = "PATCH";
+    currentGame = parseInt($(this).attr("data-game"));
+    turn = 0;
+    $('td').each(function(data){
+      if (data.html != ""){
+        turn++;
+      }
+    });
+    var state = $(this).attr("data-state");
+    var board = state.split(',');
+    $('td').each(function(i, val) {
+      $(val).html(board[i]);
+    });
+  });
+}
+
+function gameList(){
+  var gameList = [];
+  $.getJSON("/games").done(function(data) {
+    gameList = data.games;
+    var list = $("#games");
+    list.html("");
+    gameList.forEach(function(game){
+      list.append('<button class="load" data-game="' + game['id'] + '" data-state="' + game['state'] + '">' + game['id'] + '</button><br>');
+    });
+  });
 }
 
 $(document).ready(function() {
