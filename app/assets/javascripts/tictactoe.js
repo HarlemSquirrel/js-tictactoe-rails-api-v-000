@@ -122,9 +122,9 @@ function save() {
 
 
 function loadGame(){
-  $('div#games').on('click', 'button', function(){
+  $('div#games').on('click', 'li', function(){
     method = "PATCH";
-    currentGame = parseInt($(this).attr("data-game"));
+    currentGame = parseInt($(this).attr("data-gameid"));
     turn = 0;
     $('td').each(function(data){
       if (data.html != ""){
@@ -146,7 +146,7 @@ function gameList(){
     var list = $("#games");
     list.html("");
     gameList.forEach(function(game){
-      list.append('<li class="load" data-game="' + game['id'] + '" data-state="' + game['state'] + '">' + game['id'] + '</li>');
+      list.append('<li class="load" data-gameid="' + game['id'] + '" data-state="' + game['state'] + '">' + game['id'] + '</li>');
     });
   });
 }
