@@ -1,5 +1,5 @@
 
-var currentGame;
+var currentGame = 0;
 
 var turn = 0;
 
@@ -37,12 +37,14 @@ function attachListeners() {
 function doTurn(cell) {
   if ($(cell).text() === "") {
     updateState(cell);
+    //debugger;
     if (checkWinner()) {
+      //debugger;
       save();
       resetGame();
     } else {
       turn += 1;
-      save();
+      //save();
     }
   }
 }
@@ -92,8 +94,9 @@ function resetGame() {
 
 function save() {
   var gameBoard = [],
-      url = '';
-      method = '';
+      url = '',
+      method = '',
+      gameId;
 
   $('td').each(function() {
     gameBoard.push($(this).text());
@@ -119,6 +122,8 @@ function save() {
     .done(function (response) {
       currentGame = response["game"] ? response["game"]["id"] : response["id"];
     });
+    //debugger;
+  return currentGame;
 }
 
 
