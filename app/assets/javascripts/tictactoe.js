@@ -38,6 +38,7 @@ function doTurn(cell) {
   if ($(cell).text() === "") {
     updateState(cell);
     if (checkWinner()) {
+      save();
       resetGame();
     } else {
       turn += 1;
@@ -125,16 +126,18 @@ function loadGame(){
   $('div#games').on('click', 'li', function(){
     method = "PATCH";
     currentGame = parseInt($(this).attr("data-gameid"));
-    turn = 0;
-    $('td').each(function(data){
-      if (data.html != ""){
-        turn++;
-      }
-    });
+
     var state = $(this).attr("data-state");
     var board = state.split(',');
     $('td').each(function(i, val) {
       $(val).html(board[i]);
+    });
+
+    turn = 0;
+    $('td').each(function(index,data){
+      if ($(data).text() != ""){
+        turn++;
+      }
     });
   });
 }
