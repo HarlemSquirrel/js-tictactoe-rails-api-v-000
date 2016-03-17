@@ -116,8 +116,6 @@ function save() {
     }
   })
     .done(function (response) {
-      //debugger;
-      //currentGame = response["id"];
       currentGame = response["game"] ? response["game"]["id"] : response["id"];
     });
 }
@@ -148,7 +146,7 @@ function gameList(){
     var list = $("#games");
     list.html("");
     gameList.forEach(function(game){
-      list.append('<button class="load" data-game="' + game['id'] + '" data-state="' + game['state'] + '">' + game['id'] + '</button><br>');
+      list.append('<li class="load" data-game="' + game['id'] + '" data-state="' + game['state'] + '">' + game['id'] + '</li>');
     });
   });
 }
