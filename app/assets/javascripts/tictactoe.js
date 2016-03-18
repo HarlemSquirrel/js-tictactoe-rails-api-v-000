@@ -96,7 +96,8 @@ function save() {
   var gameBoard = [],
       url = '',
       method = '',
-      gameId;
+      gameId,
+      setCurrentGame;
 
   $('td').each(function() {
     gameBoard.push($(this).text());
@@ -108,6 +109,7 @@ function save() {
   } else {
     url = "/games"
     method = "POST"
+    setCurrentGame = !checkWinner()
   }
 
   $.ajax({
@@ -120,7 +122,10 @@ function save() {
     }
   })
     .done(function (response) {
-      currentGame = response["game"] ? response["game"]["id"] : response["id"];
+      if (setCurrentGame) {
+        currentGame = response["game"] ? response["game"]["id"] : response["id"];
+      }
+
     });
     //debugger;
   return currentGame;
